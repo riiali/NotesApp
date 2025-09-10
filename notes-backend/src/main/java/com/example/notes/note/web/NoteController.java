@@ -30,4 +30,13 @@ public class NoteController {
     public List<NoteResponse> list(){
         return service.list();
     }
+    @PutMapping("/{id}")
+    public NoteResponse update(@PathVariable Long id, @Valid @RequestBody CreateNoteRequest request) {
+        return service.update(id, request);
+    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
 }

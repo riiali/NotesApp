@@ -32,4 +32,20 @@ public class NoteServiceImpl implements NoteService {
                 .map(mapper::toResponse)
                 .toList();
     }
+
+    @Override
+    public NoteResponse update(Long id, CreateNoteRequest request) {
+        Note existing = repository.findById(id).orElseThrow(() -> new RuntimeException("Note not found"));
+        mapper.updateEntity(mapper.toEntity(request), existing);
+        Note updated = repository.save(existing);
+        return mapper.toResponse(updated);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if(!repository.existsById(id)){
+            throw new RuntimeException("Note not found");
+        }
+        repository.deleteById(id);
+    }
 }

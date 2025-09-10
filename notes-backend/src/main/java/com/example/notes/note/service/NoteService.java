@@ -8,4 +8,6 @@ import java.util.List;
 public interface NoteService {
     NoteResponse create(CreateNoteRequest request);
     List<NoteResponse> list();
+    NoteResponse update(Long id, CreateNoteRequest request);
+    void delete(Long id);
 }
