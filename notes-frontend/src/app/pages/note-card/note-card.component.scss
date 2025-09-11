@@ -1,0 +1,138 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+$card-height: 300px;
+$card-width: 200px;
+$card-radius: 12px;
+
+.card {
+  box-sizing: border-box;
+  position: relative;
+  flex: 0 0 $card-width;
+  width: $card-width;
+  height: $card-height;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: $card-radius;
+  padding: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  transition: width .2s ease, height .2s ease, box-shadow .12s ease;
+  overflow: hidden;
+  outline: none;
+
+  &:not(.expanded) { cursor: pointer; }
+  &:hover { box-shadow: 0 4px 14px rgba(0,0,0,.10); }
+  &:focus-visible { box-shadow: 0 0 0 3px rgba(25,118,210,.35); }
+
+  &.expanded {
+    flex: 0 0 600px;
+    width: 600px;
+    height: 400px;
+    cursor: default;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);                       
+    scrollbar-gutter: stable both-edges;    
+    z-index: 10;
+  }
+
+  .trash {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: #e53935; color: #fff;
+    border: 0; border-radius: 8px;
+    padding: 6px 10px; font-size: 14px;
+    cursor: pointer; z-index: 20;
+    i { font-size: 14px; }
+    &:hover { background: #c62828; }
+  }
+
+  .preview {
+    .title {
+      margin: 0 40px 6px 0;
+      font-size: 1.05rem; font-weight: 600;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .snippet {
+      margin: 0; color: #374151; line-height: 1.35;
+      display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .editor {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    padding-top: 4px;
+    padding-bottom: 0;
+    box-sizing: border-box;
+
+    .fields {
+      box-sizing: border-box;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      overflow: hidden;
+
+      input, textarea {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        padding: .5rem;
+        font: inherit;
+      }
+
+      input { flex: 0 0 auto; min-height: 40px; box-sizing: border-box; }
+
+    textarea {
+      flex: 1 1 auto;
+      min-height: 80px;
+      max-height: 70%;
+      max-width: 100%;
+      overflow: auto;
+      resize: none;
+      box-sizing: border-box;
+      }
+    }
+
+    .actions {
+    position: sticky;        
+    bottom: 0;
+    right: 0;
+    margin-top: auto;    
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+    padding: 12px 12px 12px 0;
+    background: linear-gradient(to top, #fff 70%, rgba(255,255,255,0));
+
+      .save-btn {
+        background: #1976d2; color:#fff; border:0; border-radius:8px; padding:.45rem .9rem; cursor:pointer;
+        i { margin-right:.35rem; }
+        &:hover { background:#1565c0; }
+      }
+      .cancel-btn {
+        background:#e5e7eb; border:0; border-radius:8px; padding:.45rem .9rem; cursor:pointer;
+        i { margin-right:.35rem; }
+        &:hover { background:#d1d5db; }
+      }
+    }
+  }
+
+  .spacer { height: 30px; }
+}
+
+@media (max-width: 720px) {
+  .card.expanded {
+    flex-basis: 100%;
+    width: 100%;
+    height: 60vh;
+  }
+}

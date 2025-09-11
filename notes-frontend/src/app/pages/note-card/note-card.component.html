@@ -1,0 +1,46 @@
+<div
+  class="card"
+  [class.expanded]="expanded"
+  (click)="editNote()"
+  tabindex="0"
+  role="group"
+>
+  <button
+    class="trash"
+    type="button"
+    aria-label="Elimina nota"
+    (click)="delete($event); $event.stopPropagation()"
+  >
+    <i class="fa fa-trash-o" aria-hidden="true"></i>
+  </button>
+
+  <div class="spacer"></div>
+
+  <!-- PREVIEW (collapsed) -->
+  <div class="preview" *ngIf="!expanded">
+    <h3 class="title" [title]="note.title">{{ note.title }}</h3>
+    <p class="snippet">{{ note.text }}</p>
+  </div>
+
+  <!-- EDITOR (expanded) -->
+  <form
+    class="editor"
+    *ngIf="expanded"
+    (submit)="save($event)"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="fields">
+      <input [(ngModel)]="editTitle" name="title" placeholder="Titolo" required />
+      <textarea [(ngModel)]="editText" name="text" placeholder="Testo" required></textarea>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="save-btn">
+        <i class="fa fa-save" aria-hidden="true"></i> Salva
+      </button>
+      <button type="button" class="cancel-btn" (click)="cancel($event)">
+        <i class="fa fa-times" aria-hidden="true"></i> Annulla
+      </button>
+    </div>
+  </form>
+</div>

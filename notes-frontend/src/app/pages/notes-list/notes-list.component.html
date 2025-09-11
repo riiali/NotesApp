@@ -1,0 +1,52 @@
+<div class="wrap">
+  <!-- FLEX CONTAINER -->
+  <div class="cards">
+    <div 
+      class="card add-card"
+      [class.expanded]="isAddingNote"
+      (click)="startAddingNote()"
+      tabindex="0"
+      role="group"
+    >
+      <div class="spacer"></div>
+
+      <div class="preview add-preview" *ngIf="!isAddingNote">
+        <div class="add-content">
+          <i class="fa fa-plus add-plus" aria-hidden="true"></i>
+          <p class="add-text">New Note</p>
+        </div>
+      </div>
+        <!-- EDITOR (expanded) -->
+      <form
+        class="editor"
+        *ngIf="isAddingNote"
+        (submit)="add($event)"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="fields">
+          <input [(ngModel)]="title" name="title" placeholder="Title" required aria-required="true" />
+          <span *ngIf="isAddingNote && !title" class="required-message">Title is required</span>
+          <textarea [(ngModel)]="text" name="text" placeholder="Text"></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="save-btn">
+            <i class="fa fa-save" aria-hidden="true"></i> Save
+          </button>
+          <button type="button" class="cancel-btn" (click)="cancelAdd($event)">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <app-note-card
+      *ngFor="let note of notes"
+      [note]="note"
+      [expanded]="expandedNoteId === note.id"
+      (update)="onUpdate($event)"
+      (remove)="onRemove($event)"
+      (expand)="onExpand($event)">
+    </app-note-card>
+  </div>
+</div>
